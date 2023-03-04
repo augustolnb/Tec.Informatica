@@ -1,27 +1,80 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-import socket
-import os, sys
+#!/usr/bin/lua
+-- cli_scan.lua
 
-host = raw_input("Digite o IP: ")
-port = raw_input("Digite a porta <default=5555>: ")
+local socket = require('socket');
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Socket tcp
-sock.connect((host, port))
+host = 'localhost';
+port = 5000;
 
-print "\n\nDigite 'x' para sair.\n"
+cli = socket.connect(host, port);
 
-comand = 'm'
+os.execute("clear");
 
-while comand != 'x' or comand != 'X':
-	comand = raw_input("Comando: ")
-	comand = comand.lower()
-	sock.send(comand)
+io.write("\n############################################");
+io.write("\n###           Scan de redes Wifi         ###");
+io.write("\n############################################");
+io.write("\n### -> Quantos ciclos deseja realizar?   ###");
+io.write("\n### * Cada ciclo faz 10 scans            ###");
+io.write("\n############################################\n\n--> ");
 
-comand = 'x'
-sock.send(comand)
+quant = tonumber(io.read());
+qtd = tostring(quant);
+cli:send(qtd.."\n");
 
-sock.close()
+cont = 0
 
+arq = io.open("z2.txt", "w");
 
+io.write("\t\tScaneando...\nPor favor aguarde o processo terminar\n");
 
+while true do
+	dados = tostring(cli:receive());
+
+	if not dados then
+		break;
+	end
+
+	arq:write(dados.."\n");
+
+	if string.match(dados, 'Terminou') ~= nil then
+		cont = cont + 1;
+		io.write("\n\tFim do "..cont.." ciclo\n");
+		arq:write("\n***************Fim do Ciclo***************\n\n\n");
+	end
+
+	if tonumber(cont) == tonumber(quant) then
+		io.write("\nServidor online\n");
+		break;
+	end
+end
+
+io.close(arq);
+--io.close(cli);
+--arq:close();
+cli:close();
+
+arq = io.open("z2.txt", "r");
+ptr = io.open("qtd.txt", "w");
+
+for i in arq:lines() do
+
+	if string.match(i, 'Terminou_1') == nil then
+		ptr:write(i.."\n");
+	else
+		break;
+	end
+end
+
+scan = io.open("scan.txt", "w");
+io.close(ptr);
+ptr = io.open("qtd.txt", "r");
+
+for i in ptr:lines() do
+	if string.match(i, 'Numero de Scans: 2') == nil then
+		scan:write(i.."\n");
+	else
+		break;
+	end
+end
+
+io.write("\nFim do programa\n");
