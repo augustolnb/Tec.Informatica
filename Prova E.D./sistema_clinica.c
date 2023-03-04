@@ -1,7 +1,7 @@
-# Prova de estrutura de dados
-# Discente: Lucas Augusto
-# Curso EMI 4º ano - 2016
-# Simulação do sistema de atendimento de uma clinica implementando ordem de prioridade ao adicionar paciente.
+// Prova de estrutura de dados
+// Discente: Lucas Augusto
+// Curso EMI 4º ano - 2016
+// Simulação do sistema de atendimento de uma clinica implementando ordem de prioridade ao adicionar paciente.
 
 #include <stdio.h>
 #include <stdlib.h>
