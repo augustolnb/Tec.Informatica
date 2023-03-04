@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <malloc.h>
-#include "/home/lucas/Documentos/Estrutura/Trabalho/trabalho.h" //Obs: mude o caminho do arquivo .h 
+#include "/home/lucas/Documentos/Estrutura/Trabalho/sistema_clinica.h" //Obs: mude o caminho do arquivo .h 
 #include <time.h>
 
 int main(void)
